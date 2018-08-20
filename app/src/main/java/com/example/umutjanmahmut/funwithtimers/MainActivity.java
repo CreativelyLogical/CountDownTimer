@@ -1,5 +1,6 @@
 package com.example.umutjanmahmut.funwithtimers;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,17 +46,21 @@ public class MainActivity extends AppCompatActivity {
         startPauseResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mTimerRunning) {
-                    if (!timeSpecified) {
-                        mTimeLeftInMillis = Integer.parseInt(input.getText().toString()) * 1000;
-                        timeSpecified = true;
-                    }
-
-                    startTimer();
-                }
-                else if (mTimerRunning) {
-                    pauseTimer();
-                }
+                int seconds = Integer.parseInt(input.getText().toString());
+                Intent toTimer = new Intent(getApplicationContext(), TimerActivity.class);
+                toTimer.putExtra("countDownSeconds", seconds);
+                startActivity(toTimer);
+//                if (!mTimerRunning) {
+//                    if (!timeSpecified) {
+//                        mTimeLeftInMillis = Integer.parseInt(input.getText().toString())* 1000 + 1000;
+//                        timeSpecified = true;
+//                    }
+//
+//                    startTimer();
+//                }
+//                else if (mTimerRunning) {
+//                    pauseTimer();
+//                }
             }
         });
 
@@ -63,35 +68,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void startTimer() {
-         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-             @Override
-             public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                setText();
-             }
-
-             @Override
-             public void onFinish() {
-                timer.setText("Done!");
-                timeSpecified = false;
-             }
-         }.start();
-
-         startPauseResume.setText("Pause");
-         mTimerRunning = true;
-    }
-
-    private void pauseTimer() {
-        if (mTimerRunning) {
-            mCountDownTimer.cancel();
-            mTimerRunning = false;
-            startPauseResume.setText("Resume");
-        }
-        else {
-
-        }
-    }
+//    private void startTimer() {
+//         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+//             @Override
+//             public void onTick(long millisUntilFinished) {
+//                mTimeLeftInMillis = millisUntilFinished;
+//                setText();
+//             }
+//
+//             @Override
+//             public void onFinish() {
+//                timer.setText("Done!");
+//                timeSpecified = false;
+//             }
+//         }.start();
+//
+//         startPauseResume.setText("Pause");
+//         mTimerRunning = true;
+//    }
+//
+//    private void pauseTimer() {
+//        if (mTimerRunning) {
+//            mCountDownTimer.cancel();
+//            mTimerRunning = false;
+//            startPauseResume.setText("Resume");
+//        }
+//        else {
+//
+//        }
+//    }
 
     public void toastMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
